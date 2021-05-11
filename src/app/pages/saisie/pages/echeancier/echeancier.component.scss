@@ -1,0 +1,31 @@
+.below-30 {
+  background-color: #f5c6cb;
+}
+.e-grid .e-gridheader {
+  background-color: #fff0;
+  border-bottom-color: #000000;
+  border-top-color: #000000;
+  color: rgb(0 0 0);
+}
+.e-pager .e-currentitem, .e-pager .e-currentitem:hover {
+  background: #1650e3;
+  color: #fff;
+  opacity: 1;
+}
+#container {
+  visibility: hidden;
+}
+
+#loader {
+  color: #008cff;
+  height: 40px;
+  width: 30%;
+  position: absolute;
+  top: 45%;
+  left: 45%;
+}
+
+#wrapper {
+  margin: 0 auto;
+  padding-top: 20px;
+}

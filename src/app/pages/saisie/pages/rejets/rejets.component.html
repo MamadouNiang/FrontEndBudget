@@ -1,0 +1,120 @@
+<app-header></app-header>
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-12" >
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h3 class="h3">Liste des Rejets</h3>
+        <div >
+        </div>
+      </div>
+      <div>
+
+        <ngx-datatable
+          class="material fullscreen"
+
+          [rows]="rows"
+          [limit]="10"
+          columnMode="ColumnMode.force"
+          [headerHeight]="40"
+          [footerHeight]="100"
+
+          [scrollbarH]="true"
+          [selected]="selected"
+          [selectionType]="SelectionType.checkbox"
+          (activate)="onActivate($event)"
+          (select)="onSelect($event)"
+          [rowHeight]="35"
+
+        >
+          <ngx-datatable-column
+            [width]="30"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+          >
+            <ng-template
+              ngx-datatable-header-template
+              let-value="value"
+              let-allRowsSelected="allRowsSelected"
+              let-selectFn="selectFn"
+            >
+              <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
+            </ng-template>
+            <ng-template
+              ngx-datatable-cell-template
+              let-value="value"
+              let-isSelected="isSelected"
+              let-onCheckboxChangeFn="onCheckboxChangeFn"
+            >
+              <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!--          <ngx-datatable-column [width]="90"   *ngFor="let col of columns" [name]="col.name">-->
+          <!--            <ng-template let-value="value" ngx-datatable-cell-template>-->
+          <!--              {{value | date:'dd/MM/yyyy'}}-->
+          <!--            </ng-template>-->
+          <!--          </ngx-datatable-column>-->
+          <ngx-datatable-column name="matricule" [width]="80"></ngx-datatable-column>
+          <ngx-datatable-column name="acdBanque"  [width]="80" ></ngx-datatable-column>
+          <ngx-datatable-column name="acdMdr" [width]="80"></ngx-datatable-column>
+          <ngx-datatable-column name="anumeroCompte" [width]="120"></ngx-datatable-column>
+          <ngx-datatable-column name="acdPosition" [width]="80"></ngx-datatable-column>
+          <ngx-datatable-column name="adatePosition "  [width]="120">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value | date:'dd/MM/yyyy'}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="ncdBanque" [width]="80"></ngx-datatable-column>
+          <ngx-datatable-column name="ncdMdr" [width]="80"></ngx-datatable-column>
+          <ngx-datatable-column name="nnumeroCompte" [width]="120"></ngx-datatable-column>
+          <ngx-datatable-column name="ncdPosition" [width]="80"></ngx-datatable-column>
+          <ngx-datatable-column name="ndateposition" [width]="120">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{value | date:'dd/MM/yyyy'}}
+            </ng-template>
+          </ngx-datatable-column>
+
+
+          <!--          <ngx-datatable-footer *ngIf="true">-->
+          <!--            <ng-template-->
+          <!--              ngx-datatable-footer-template-->
+          <!--              let-rowCount="rowCount"-->
+          <!--              let-pageSize="pageSize"-->
+          <!--              let-selectedCount="selectedCount"-->
+          <!--              let-curPage="curPage"-->
+          <!--              let-offset="offset"-->
+          <!--            >-->
+          <!--              <div style="padding: 5px 10px">-->
+          <!--                <div><strong>Summary</strong>: Gender: Female</div>-->
+          <!--                <hr style="width:100%" />-->
+          <!--                <div>Rows: {{ rowCount }} | Size: {{ pageSize }} | Current: {{ curPage }} | Offset: {{ offset }}</div>-->
+          <!--              </div>-->
+          <!--            </ng-template>-->
+          <!--          </ngx-datatable-footer>-->
+        </ngx-datatable>
+      </div>
+      <div class="selected-column">
+        <h4>
+          Selections <small>({{ selected?.length }})</small>
+        </h4>
+        <ul>
+          <li *ngFor="let sel of selected">
+            {{ sel.matricule }}
+          </li>
+          <li *ngIf="!selected?.length">Pas de Selections</li>
+        </ul>
+      </div>
+      <!--      <div class="selected-column">-->
+      <!--        <h4>Available Columns</h4>-->
+      <!--        <ul>-->
+      <!--          <li *ngFor="let col of allColumns">-->
+      <!--            <input type="checkbox" [id]="col.name" (click)="toggle(col)" [checked]="isChecked(col)" />-->
+      <!--            <label [attr.for]="col.name">{{ col.name }}</label>-->
+      <!--          </li>-->
+      <!--        </ul>-->
+      <!--      </div>-->
+    </main>
+  </div>
+</div>

@@ -1,0 +1,186 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3" style="margin-left: 5%;">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active"   >
+              <span data-feather="home" ></span>
+              <button type="button"  routerLink="/saisie" class="btn  btn-sm btn-outline-success btn-block" >
+                <strong > <h6>Changement de Position</h6></strong> <span class="sr-only">(current)</span>
+              </button>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link "  >
+              <span data-feather="home" ></span>
+              <button type="button"  routerLink="/modification_compte" class="btn  btn-sm btn-outline-success btn-block" >
+                <strong > <h6>Changement de Compte </h6></strong> <span class="sr-only">(current)</span>
+              </button>
+              <!-- Split dropright button -->
+              <!-- Small button groups (default and split) -->
+<!--              <div class="btn-group btn-block dropright  ">-->
+<!--                <button type="button" class="btn btn-success btn-sm btn-outline-success" disabled><strong>Modifications</strong></button>-->
+<!--                <button type="button" class="btn btn-success btn-sm  dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                  <span class="sr-only">Toggle Dropdown</span>-->
+<!--                </button>-->
+<!--                <div class="dropdown-menu" style="background: #d6d6d6;">-->
+<!--                  <a class="dropdown-item" href="#"><strong>Avancement</strong></a>-->
+<!--                  <div class="dropdown-divider"></div>-->
+<!--                  <a class="dropdown-item" href="#"><strong> Administratives </strong></a>-->
+<!--                  <div class="dropdown-divider"></div>-->
+<!--                  <a class="dropdown-item" routerLink="/modification_compte"><strong>comptes Bancaires</strong> </a>-->
+<!--                  <div class="dropdown-divider"></div>-->
+<!--                  <a class="dropdown-item" href="#"><strong>Positions</strong></a>-->
+<!--                </div>-->
+<!--              </div>-->
+            </a>
+          </li>
+          <!--          <li class="nav-item">-->
+          <!--            <a class="nav-link" href="#">-->
+          <!--              <span data-feather="file"></span>-->
+          <!--              Option 1-->
+          <!--            </a>-->
+          <!--          </li>-->
+          <!--          <li class="nav-item">-->
+          <!--            <a class="nav-link" href="#">-->
+          <!--              <span data-feather="shopping-cart"></span>-->
+          <!--              option 2-->
+          <!--            </a>-->
+          <!--          </li>-->
+        </ul>
+<!--        <ul class="nav flex-column">-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link " >-->
+<!--              <span data-feather="home"></span>-->
+<!--              <button type="button" class="btn  btn-sm btn-outline-success btn-block"  >-->
+<!--                <strong > <h6>Rappels</h6></strong> <span class="sr-only">(current)</span>-->
+<!--              </button>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--        <ul class="nav flex-column">-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link "  >-->
+<!--              <span data-feather="home"></span>-->
+<!--              <button type="button" class="btn  btn-sm btn-outline-success btn-block" >-->
+<!--                <strong > <h6>Validation</h6> </strong> <span class="sr-only">(current)</span>-->
+<!--              </button>-->
+<!--            </a>-->
+<!--          </li>-->
+
+<!--        </ul>-->
+      </div>
+    </nav>
+<!--    <app-main-saisie > </app-main-saisie>-->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" >
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h3 class="h3">Chamgement de Position</h3>
+        <div *ngFor="let alert of alerts">
+          <strong>
+            <alert style="position: absolute; top: 10px; right: 40%;" [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+          </strong>
+        </div>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <form [formGroup]="rechercheForm" (ngSubmit)="onSearchMatricule()">
+            <div class="btn-group mr-2">
+              <input formControlName="matricule" type="text" class="form-control" placeholder="Entrer le matricule" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <button type="submit" [disabled]="rechercheForm.invalid" class="btn btn-sm btn-success">
+              <i class="bi bi-search"></i> Rechercher</button>
+          </form>
+
+        </div>
+      </div>
+      <br>
+      <div class="container" *ngIf="showTable">
+        <div class="panel panel-success">
+          <div class="panel-heading" style="color: green"><h5><strong>Anciennes Informations</strong></h5></div>
+          <div class="panel-body">
+            <div class="row">
+            <div class="col-sm">
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">Matricule</th>
+                  <th scope="col"> Banque</th>
+                  <th scope="col">Agence</th>
+                  <th scope="col">Nr Compte</th>
+                  <th scope="col"></th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="table-success" *ngFor="let item of datas">
+                  <td>{{item.matricule}}</td>
+                  <td>{{item.cdBanque}}</td>
+                  <td>{{item.cdMdr}}</td>
+                  <td>{{item.numeroCompte}}</td>
+                  <td></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--      <div class="col-sm">-->
+            <!--       col2-->
+            <!--      </div>-->
+          </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="panel panel-warning">
+          <div class="panel-heading" style="color: red"><h5><strong>Nouvelles Informations</strong> </h5> </div>
+          <div class="panel-body">
+            <div class="row">
+            <div class="col-sm">
+              <form [formGroup]="validerForm" (ngSubmit)="onvaliderFormaliderForm()">
+                <table class="table table-striped">
+                  <thead>
+                  <tr >
+
+                    <th scope="col">Nouvelle Banque </th>
+                    <th scope="col">Nouveau Agence</th>
+                    <th scope="col">Nouveau Numero Compte</th>
+                    <th scope="col"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="table-danger" *ngFor="let item of datas;let j = index">
+                    <td>
+                      <input hidden readonly formControlName="matricule" type="text" class="form-control" value="{{item.matricule}}"  aria-describedby="basic-addon1">
+                    </td>
+                    <td>
+                      <input formControlName="ncdBanque" type="text" class="form-control"   aria-describedby="basic-addon1">
+
+                    </td>
+                    <td>
+                      <input formControlName="ncdMdr" type="text" class="form-control"  aria-label="Username" aria-describedby="basic-addon1">
+                    </td>
+                    <td>
+                      <input formControlName="nnumeroCompte" type="text" class="form-control"  aria-label="Username" aria-describedby="basic-addon1">
+                    </td>
+                    <td>
+                      <button type="submit" [disabled]="validerForm.invalid" class="btn btn-success btn-sm">
+                        <i class="bi bi-check"></i> Valider</button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </form>
+            </div>
+            <!--      <div class="col-sm">-->
+            <!--       col2-->
+            <!--      </div>-->
+          </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>

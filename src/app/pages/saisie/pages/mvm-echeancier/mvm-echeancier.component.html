@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <app-chargement></app-chargement>
+  <div class="row">
+    <main role="main" class="col-md-12 " >
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h3 class="h3">Liste Echeancier</h3>
+<!--        <div >-->
+<!--          <strong>-->
+<!--            <div class="alert alert-danger" role="alert" *ngIf="cas.length!=0">-->
+<!--              Erreurs trouvées : {{cas.length}}-->
+<!--            </div>-->
+<!--          </strong>-->
+<!--        </div>-->
+<!--        <div class="btn-toolbar mb-2 mb-md-0">-->
+<!--          <div class="tools">-->
+<!--            <button class="btn btn-sm btn-success">-->
+
+<!--              <label style="margin-bottom: 0;">-->
+<!--                <span class="mdi mdi-file-export "><strong>   <i class="bi bi-file-plus "> </i>  Import</strong> </span>-->
+<!--                <input class="custom-file-input" type="file" hidden  (change)="onFileChange($event)" >-->
+<!--              </label>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--          <button *ngIf="cas.length==0 && importEcheancier.length!=0" class="btn btn-sm btn-success ml-2" (click)="saveExcel()">-->
+<!--            <span><strong> <i class="bi bi-file-check-fill"> </i> Valider</strong> </span>-->
+<!--          </button>-->
+<!--        </div>-->
+      </div>
+      <div>
+        <div class="control-section" >
+          <ejs-grid  #grid
+                     [dataSource]='tabMvm'
+                     (dataBound)='dataBound($event)'
+
+                     id="gridcomp"  allowSorting='true' showColumnMenu='true'
+                     allowPaging='true' height=450 [pageSettings]='initialPage'>
+
+          </ejs-grid>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

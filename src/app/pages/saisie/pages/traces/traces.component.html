@@ -1,0 +1,80 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <main role="main" class="col-md-12 " >
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h3 class="h3">Historiques</h3>
+        <div class="btn-toolbar mb-2 mb-md-0">
+        </div>
+      </div>
+<div class="control-section">
+  <ejs-grid #grid [dataSource]='data'
+            [toolbar]='toolbar'
+            locale='fr-FR' allowPaging='true' allowSorting='true'
+            [allowGrouping]="true" [groupSettings]="groupOptions" [pageSettings]='pageSettings'
+            height="320" (dataBound)='dataBound()' (created)='created()' (load)='load()'>
+    <e-columns>
+      <e-column field='id' headerText='id' width='80'></e-column>
+      <e-column field='matricule' headerText='matricule' width='80'></e-column>
+      <e-column field='acdBanque' headerText='acdBanque' width='80'></e-column>
+      <e-column field='acdMdr' headerText='acdMdr' width='80'></e-column>
+      <e-column field='anumeroCompte' headerText='anumeroCompte' width='80'></e-column>
+      <e-column field='ncdBanque' headerText='ncdBanque' width='80'></e-column>
+      <e-column field='ncdMdr' headerText='ncdMdr' width='80'></e-column>
+      <e-column field='nnumeroCompte' headerText='nnumeroCompte' width='80'></e-column>
+      <e-column field='acdPosition' headerText='acdPosition'  width='80'></e-column>
+      <e-column field='adatePosition'  headerText="adatePosition"  width='120' ></e-column>
+      <e-column field='ncdPosition' headerText='ncdPosition' width='80'></e-column>
+      <e-column field='ndateposition'  headerText='ndateposition' width='120'></e-column>
+      <e-column field='idUser' headerText='idUser' [allowGrouping]="false" width='80'></e-column>
+    </e-columns>
+  </ejs-grid>
+  <ejs-dialog #alertDialog [buttons]='alertDlgButtons' [visible]='hidden' [header]='alertHeader' [animationSettings]='animationSettings' [content]='alertContent' [showCloseIcon]='showCloseIcon' [target]='target' [width]='alertWidth'>
+  </ejs-dialog>
+</div>
+
+<!--      <ngx-datatable  [reorderable]="reorderable" #myTable class="material expandable" [rows]="rows" [groupRowsBy]="'matricule'" [columnMode]="ColumnMode.force" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50" [rowHeight]="40" [limit]="4" [groupExpansionDefault]="true">-->
+<!--        <table></table>-->
+<!--        &lt;!&ndash; Group Header Template &ndash;&gt;-->
+<!--        <ngx-datatable-group-header [rowHeight]="50" #myGroupHeader (toggle)="onDetailToggle($event)">-->
+<!--          <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>-->
+<!--            <div style="padding-left:5px;">-->
+<!--              <a-->
+<!--                [class.datatable-icon-right]="!expanded"-->
+<!--                [class.datatable-icon-down]="expanded"-->
+<!--                title="Expand/Collapse Group"-->
+<!--                (click)="toggleExpandGroup(group)"-->
+<!--              >-->
+<!--                <b>Matricule: {{ group.value[0].matricule }}</b>-->
+<!--              </a>-->
+<!--            </div>-->
+<!--          </ng-template>-->
+<!--        </ngx-datatable-group-header>-->
+<!--        <ngx-datatable-column name="ID" prop="id" editable="false" [width]="40" ></ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="Matricule" prop="matricule" editable="false" [width]="50" ></ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="A.Cpt.Banque" prop="acdBanque" editable="false" [width]="80" ></ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="A.Cpt.Agence" prop="acdMdr" editable="false" [width]="80"></ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="A.Numero.Compte" prop="anumeroCompte" editable="false" [width]="80"></ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="N.Cpt.Banque" prop="ncdBanque" [width]="80"></ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="N.Cpt.Agence" prop="ncdMdr" [width]="80"> </ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="A.Numero.Compte" prop="nnumeroCompte" [width]="80"></ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="A.Code.Position" prop="acdPosition" [width]="80"></ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="A.D.Position" prop="adatePosition" [width]="80">-->
+<!--          <ng-template let-value="value" ngx-datatable-cell-template>-->
+<!--            {{value | date:'dd/MM/yyyy'}}-->
+<!--          </ng-template>-->
+<!--        </ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="N.C.Position" prop="ncdPosition" [width]="80"></ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="N.D.Position" prop="ndateposition" [width]="80">-->
+<!--          <ng-template let-value="value" ngx-datatable-cell-template>-->
+<!--            {{value | date:'dd/MM/yyyy'}}-->
+<!--          </ng-template>-->
+<!--        </ngx-datatable-column>-->
+<!--        <ngx-datatable-column name="idUser" prop="idUser" [width]="80"></ngx-datatable-column>-->
+<!--        </ngx-datatable>-->
+
+    </main>
+    <br>
+  </div>
+
+</div>

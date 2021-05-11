@@ -1,0 +1,56 @@
+<div *ngFor="let alert of alerts">
+ <strong>
+   <alert style="position: absolute; top: 0; right: 0;" [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+ </strong>
+</div>
+<div class="container container-sm container-fluid  maContenaire">
+  <div class="card  ">
+    <div class="card-header " style="text-align: center;background:#006233; color: white">
+    <strong><h6>Authentification</h6></strong>
+    </div>
+
+    <div class="card-body " style="margin-left: 14%">
+      <form class="form-horizontal " role="form" [formGroup]="register" (ngSubmit)="onSubmit()">
+        <div class="form-group" >
+          <label class="control-label col-sm-7" ><strong>Matricule</strong> </label>
+          <div class="col-sm-10">
+            <i class="glyphicon glyphicon-search"></i>
+            <input [class.is-invalid]="register.get('matricule').invalid && register.get('matricule').touched" formControlName="matricule" type="text" class="form-control" id="tet" placeholder="Entrer votre Matricule" >
+          </div>
+          <div *ngIf="(matricule.invalid && matricule.touched) || matricule.dirty" class="text-red-500 text-xs italic">
+            <h6 *ngIf="matricule.errors?.required" class="text-danger italic" style="margin-left:50%"> Ne peut etre vide</h6>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-7" ><strong>Password</strong> </label>
+          <div class="col-sm-10">
+            <input [class.is-invalid]="register.get('password').invalid && register.get('password').touched"  formControlName="password" [type]="typePassword ? 'text': 'password' " class="form-control" id="pwd" placeholder="Enter votre mot de passe">
+          </div>
+          <div *ngIf="(password.invalid && password.touched) || password.dirty " class="text-red-500 text-xs italic">
+            <h6 *ngIf="password.errors?.required " class="text-danger italic" style="margin-left:50%">Ne peut etre vide</h6>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10" style="text-align: right">
+            <div class="checkbox">
+              <label><input type="checkbox" (click)="voirPassword()"> Voir mot de passe</label>
+            </div>
+
+<!--            <button type="button" class="btn btn-primary" (click)="add('danger','erreur',5000)">Add more</button>-->
+          </div>
+        </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10" >
+              <button class="btn btn-success btn-sm btn-block" type="submit"  [disabled]="!register.valid">    Valider    </button>
+            </div>
+          </div>
+      </form>
+    </div>
+    <div class="card-footer  " style="text-align: center;background:#006233; color: white">
+      <div class=""  style="margin-left: 1%; color: white">
+        <h5>Direction Générale du Budget</h5>
+      </div>
+    </div>
+  </div>
+
+</div>
