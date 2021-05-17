@@ -24,6 +24,20 @@ export class EcheancierComponent implements OnInit {
   cas=[];
   Erreurs=true;
   columns=[];
+  columnsR=[
+    {field:'matricule'},
+    {field:'nni'},
+    {field:'Banque'},
+    {field:'prenom'},
+    {field:'nrCompte'},
+    {field:'brut'},
+    {field:'its'},
+    {field:'cnss'},
+    {field:'net'},
+    {field:'partCnss'},
+    {field:'partCnam'},
+    {field:'observation'},
+  ];
   importEcheancier: EcheancierModel[] = [];
   exportEcheancier: EcheancierModel[] = [];
   public initialPage: Object;
@@ -93,6 +107,8 @@ export class EcheancierComponent implements OnInit {
       const importedData = data.slice(1, -1);
       this.initialPage = { pageSizes: true, pageCount: 4 ,pageSize:importedData.length};
       this.columns.push(header);
+      this.columns.push('Partie')
+      console.log(this.columns)
       this.importEcheancier = importedData.map(arr => {
         const obj = {};
         for (let i = 0; i < header.length; i++) {

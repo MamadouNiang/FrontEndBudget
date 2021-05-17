@@ -28,6 +28,7 @@
       </div>
       <div class="control-section" *ngIf="importEcheancier.length!=0">
         <ejs-grid  #grid
+                   [columns]="columnsR"
                    [dataSource]='importEcheancier'
                    (rowDataBound)='customiseCell($event)'
                    [editSettings]='editSettings'
