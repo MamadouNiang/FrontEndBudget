@@ -47,7 +47,7 @@ export class MvmEcheancierComponent implements OnInit {
         (cols as any).format= 'dd/MM/yyyy' ;
       }
     }
-    this.grid.refreshColumns()
+    // this.grid.refreshColumns()
   }
   getAllMvmEcheancier(){
   this.service.getAllEcheancier().subscribe((data)=>{
