@@ -78,4 +78,8 @@ export class SaisieService {
     const body=JSON.parse(JSON.stringify(data));
     return  this.http.post(SERVER_URL_BE+'Echeancier/save/',body);
   }
+
+  getAllTypeEcheancier(): Observable<any> {
+    return this.http.get(SERVER_URL_BE+ 'TypeEcheancier/all');
+  }
 }

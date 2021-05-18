@@ -14,6 +14,8 @@ import {errorObject} from 'rxjs/internal-compatibility';
 import { createSpinner, showSpinner, hideSpinner } from '@syncfusion/ej2-angular-popups';
 import { setSpinner } from '@syncfusion/ej2-angular-popups';
 import { Router } from '@angular/router';
+import { DropDownList } from '@syncfusion/ej2-dropdowns';
+import { Query } from '@syncfusion/ej2-data'
 @Component({
   selector: 'app-echeancier',
   templateUrl: './echeancier.component.html',
@@ -22,8 +24,11 @@ import { Router } from '@angular/router';
 export class EcheancierComponent implements OnInit {
   DataEcheancier$: Observable<any>| null = null;
   cas=[];
+  partieElem: HTMLElement;
+  partieObj: DropDownList;
   Erreurs=true;
   columns=[];
+  typeEcheancier:any;
   columnsR=[
     {field:'matricule'},
     {field:'nni'},
@@ -37,6 +42,26 @@ export class EcheancierComponent implements OnInit {
     {field:'partCnss'},
     {field:'partCnam'},
     {field:'observation'},
+    {field: 'partie', def:'12' , edit: {
+      create: () => {
+         this.partieElem = document.createElement('input');
+        return this.partieElem;
+        },
+        read: () => {
+        return this.partieObj.text;
+        },
+        destroy: () => {
+        this.partieObj.destroy();
+        },
+        write: () => {
+        this.partieObj = new DropDownList({
+            dataSource:this.typeEcheancier,
+            fields: {value: 'partie', text: 'partie'},
+          placeholder: 'Selection',
+          floatLabelType: 'Never'
+        });
+        this.partieObj.appendTo(this.partieElem);
+    }}}
   ];
   importEcheancier: EcheancierModel[] = [];
   exportEcheancier: EcheancierModel[] = [];
@@ -56,7 +81,10 @@ export class EcheancierComponent implements OnInit {
   ngOnInit(): void {
     this.editSettings = { mode: 'Batch',showDeleteConfirmDialog: true,showConfirmDialog: true, allowEditing: true, allowAdding: true, allowDeleting: true };
     this.filterSettings = { type: 'CheckBox' };
-
+    this.service.getAllTypeEcheancier().subscribe(data=>{
+      console.log(data);
+      this.typeEcheancier = (data);
+    },error => console.log(error));
   }
   public gridCreated(): void {
     this.grid.hideSpinner = () => true;
@@ -106,8 +134,7 @@ export class EcheancierComponent implements OnInit {
       const header: string[] = Object.getOwnPropertyNames(new EcheancierModel());
       const importedData = data.slice(1, -1);
       this.initialPage = { pageSizes: true, pageCount: 4 ,pageSize:importedData.length};
-      this.columns.push(header);
-      this.columns.push('Partie')
+      this.columns.push(header+',Partie');
       console.log(this.columns)
       this.importEcheancier = importedData.map(arr => {
         const obj = {};
@@ -140,35 +167,35 @@ export class EcheancierComponent implements OnInit {
   }
   saveExcel(){
 
-    // console.log(Object.keys(this.grid.dataSource))
+    console.log((this.grid.dataSource))
     let taille = Object.keys(this.grid.dataSource);
     var char :number= taille.length;
     const erreurs = [];
-    this.subs = timer(0,300).subscribe(n=>{
-      console.log(n,char);
-        this.chargement.requestStarted();
-        this.chargement.requestStarted2(n,char);
-      this.service.saveEcheanciers(this.grid.dataSource[n]).subscribe(
-          ()=> {
-          }
-          ,error =>{
-          console.log((error));
-          erreurs.push(n);
-          n=n-1
-        }
-      );
-      if(n===char-1){
-        this.ngOnDestroy();
-        console.log("fin : " +n)
-        this.chargement.resetSpinner();
-        this.chargement.requestEnded();
-        setTimeout(function(){
-
-          }, 200);
-        this.route.navigateByUrl('/EcheancierMvm');
-        this.ngOnDestroy();
-
-      }
-    })
+    // this.subs = timer(0,300).subscribe(n=>{
+    //   console.log(n,char);
+    //     this.chargement.requestStarted();
+    //     this.chargement.requestStarted2(n,char);
+    //   this.service.saveEcheanciers(this.grid.dataSource[n]).subscribe(
+    //       ()=> {
+    //       }
+    //       ,error =>{
+    //       console.log((error));
+    //       erreurs.push(n);
+    //       n=n-1
+    //     }
+    //   );
+    //   if(n===char-1){
+    //     this.ngOnDestroy();
+    //     console.log("fin : " +n)
+    //     this.chargement.resetSpinner();
+    //     this.chargement.requestEnded();
+    //     setTimeout(function(){
+    //
+    //       }, 200);
+    //     this.route.navigateByUrl('/EcheancierMvm');
+    //     this.ngOnDestroy();
+    //
+    //   }
+    // })
     }
 }
