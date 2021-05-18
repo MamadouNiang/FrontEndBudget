@@ -35,7 +35,7 @@ export class MvmEcheancierComponent implements OnInit {
     {field:'prenom', headerText:"Prenom"},
     {field:'brut', headerText:"Brut"},
     {field:'net', headerText:"Net"},
-    {field: 'partie' , headerText:"Partie"},
+    {field: 'partie' , headerText:"Code Poste"},
     {field: 'dateMvm',format: {type:'date', format:'dd/MM/yyyy'}, headerText:"Date MAJ"},
   ];
 
@@ -83,7 +83,6 @@ export class MvmEcheancierComponent implements OnInit {
       this.service.getOneTypeEcheancier(partie).subscribe(data=>{
         this.typeOneEcheancier = data ;
         console.log(datum)
-
         if (datum.cnam === 0) {
           delete this.typeOneEcheancier.cnam;
         }
@@ -99,6 +98,7 @@ export class MvmEcheancierComponent implements OnInit {
         if (datum.partCnam === 0) {
           delete this.typeOneEcheancier.partcnam;
         }
+
         console.log(this.typeOneEcheancier)
 
 

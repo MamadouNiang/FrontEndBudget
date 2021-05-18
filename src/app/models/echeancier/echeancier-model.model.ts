@@ -9,6 +9,8 @@ export class EcheancierModel {
   cnss = '';
   cnam = '';
   net = '';
+  pension = '';
+  partPension = '';
   partCnss = '';
   partCnam = '';
   observation = '';
