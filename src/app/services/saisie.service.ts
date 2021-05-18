@@ -82,4 +82,7 @@ export class SaisieService {
   getAllTypeEcheancier(): Observable<any> {
     return this.http.get(SERVER_URL_BE+ 'TypeEcheancier/all');
   }
+  getOneTypeEcheancier(type: string): Observable<any> {
+    return this.http.get(SERVER_URL_BE+ 'TypeEcheancier/unePartie/' + type).pipe();
+  }
 }

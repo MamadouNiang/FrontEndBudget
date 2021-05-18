@@ -12,4 +12,5 @@ export class EcheancierModel {
   partCnss = '';
   partCnam = '';
   observation = '';
+  partie = '';
 }

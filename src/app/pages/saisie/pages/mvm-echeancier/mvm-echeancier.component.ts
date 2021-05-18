@@ -14,6 +14,7 @@ import {errorObject} from 'rxjs/internal-compatibility';
 import { createSpinner, showSpinner, hideSpinner } from '@syncfusion/ej2-angular-popups';
 import { setSpinner } from '@syncfusion/ej2-angular-popups';
 import { Router } from '@angular/router';
+import {DropDownList} from "@syncfusion/ej2-dropdowns";
 @Component({
   selector: 'app-mvm-echeancier',
   templateUrl: './mvm-echeancier.component.html',
@@ -22,6 +23,22 @@ import { Router } from '@angular/router';
 export class MvmEcheancierComponent implements OnInit {
   @ViewChild('grid') public grid: GridComponent;
   tabMvm={};
+  AlltabMvm=[];
+  typeEcheancier=[];
+  typeOneEcheancier:any;
+  typeTEst={};
+  public toolbar: string[];
+  columnsR=[
+    {field:'id', headerText:"ID"},
+    {field:'matricule', headerText:"Matricule"},
+    {field:'nni', headerText:"NNI"},
+    {field:'prenom', headerText:"Prenom"},
+    {field:'brut', headerText:"Brut"},
+    {field:'net', headerText:"Net"},
+    {field: 'partie' , headerText:"Partie"},
+    {field: 'dateMvm',format: {type:'date', format:'dd/MM/yyyy'}, headerText:"Date MAJ"},
+  ];
+
   public editSettings: EditSettingsModel;
   public initialPage: Object;
   public formatOptions: object;
@@ -33,10 +50,11 @@ export class MvmEcheancierComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.toolbar = ['Search'];
+    this.getAllTypeEcheacier();
     this.getAllMvmEcheancier();
     this.editSettings = { mode: 'Batch',showDeleteConfirmDialog: true,showConfirmDialog: true, allowEditing: true, allowAdding: true, allowDeleting: true };
     this.initialPage = { pageSizes: true, pageCount: 4 };
-
 
   }
   dataBound(args: any) {
@@ -49,10 +67,43 @@ export class MvmEcheancierComponent implements OnInit {
     }
     // this.grid.refreshColumns()
   }
+
+  getAllTypeEcheacier(){
+    this.service.getAllTypeEcheancier().subscribe((data)=>{
+      this.typeEcheancier = data;
+    },error => console.log(error));
+  }
+
   getAllMvmEcheancier(){
   this.service.getAllEcheancier().subscribe((data)=>{
     this.tabMvm = (data) ;
-    console.log(data);
+    this.AlltabMvm = (data) ;
+    for (const datum of data) {
+      const partie = datum.partie;
+      this.service.getOneTypeEcheancier(partie).subscribe(data=>{
+        this.typeOneEcheancier = data ;
+        console.log(datum)
+
+        if (datum.cnam === 0) {
+          delete this.typeOneEcheancier.cnam;
+        }
+        if (datum.cnss === 0) {
+          delete this.typeOneEcheancier.cnss;
+        }
+        if (datum.its === 0) {
+          delete this.typeOneEcheancier.its;
+        }
+        if (datum.partCnss === 0) {
+          delete this.typeOneEcheancier.partcnss;
+        }
+        if (datum.partCnam === 0) {
+          delete this.typeOneEcheancier.partcnam;
+        }
+        console.log(this.typeOneEcheancier)
+
+
+      },error => console.log(error));
+    }
     this.tabMvm = data.map((e) => {
       return {
         id:e.id,
@@ -62,10 +113,17 @@ export class MvmEcheancierComponent implements OnInit {
         numeroCompte: e.nrCompte,
         brut:e.brut,
         net:e.net,
+        partie:e.partie,
         dateMvm:e.dateMvm,
       };
     });
   },error => console.log(error));
   }
-
+  removeItemOnce(arr, value) {
+    var index = arr.indexOf(value);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+    return arr;
+  }
 }

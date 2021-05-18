@@ -41,27 +41,27 @@ export class EcheancierComponent implements OnInit {
     {field:'net'},
     {field:'partCnss'},
     {field:'partCnam'},
-    {field:'observation'},
-    {field: 'partie', def:'12' , edit: {
-      create: () => {
-         this.partieElem = document.createElement('input');
-        return this.partieElem;
+    {field: 'partie' , edit: {
+        create: () => {
+          this.partieElem = document.createElement('input');
+          return this.partieElem;
         },
         read: () => {
-        return this.partieObj.text;
+          return this.partieObj.text;
         },
         destroy: () => {
-        this.partieObj.destroy();
+          this.partieObj.destroy();
         },
         write: () => {
-        this.partieObj = new DropDownList({
+          this.partieObj = new DropDownList({
             dataSource:this.typeEcheancier,
             fields: {value: 'partie', text: 'partie'},
-          placeholder: 'Selection',
-          floatLabelType: 'Never'
-        });
-        this.partieObj.appendTo(this.partieElem);
-    }}}
+            placeholder: 'Selection',
+            floatLabelType: 'Never'
+          });
+          this.partieObj.appendTo(this.partieElem);
+        }}},
+    {field:'observation'},
   ];
   importEcheancier: EcheancierModel[] = [];
   exportEcheancier: EcheancierModel[] = [];
@@ -81,16 +81,19 @@ export class EcheancierComponent implements OnInit {
   ngOnInit(): void {
     this.editSettings = { mode: 'Batch',showDeleteConfirmDialog: true,showConfirmDialog: true, allowEditing: true, allowAdding: true, allowDeleting: true };
     this.filterSettings = { type: 'CheckBox' };
-    this.service.getAllTypeEcheancier().subscribe(data=>{
-      console.log(data);
-      this.typeEcheancier = (data);
-    },error => console.log(error));
+    this.getAllTypeEcheancier();
   }
   public gridCreated(): void {
     this.grid.hideSpinner = () => true;
     setSpinner({ type: 'Bootstrap' });
   }
 
+getAllTypeEcheancier(){
+  this.service.getAllTypeEcheancier().subscribe(data=>{
+    console.log(data);
+    this.typeEcheancier = (data);
+  },error => console.log(error));
+}
   customiseCell(args:RowDataBoundEventArgs){
     this.toolbar = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
     let net = args.data['net'];
@@ -120,6 +123,7 @@ export class EcheancierComponent implements OnInit {
   dataBound(args: any) {
     (this.grid.columns[1] as any).isPrimaryKey = 'true';
     this.grid.autoFitColumns();
+
   }
   onFileChange(evt: any) {
     const target: DataTransfer = <DataTransfer>(evt.target);
@@ -135,7 +139,9 @@ export class EcheancierComponent implements OnInit {
       const importedData = data.slice(1, -1);
       this.initialPage = { pageSizes: true, pageCount: 4 ,pageSize:importedData.length};
       this.columns.push(header+',Partie');
-      console.log(this.columns)
+      for (let i = 0; i < importedData.length; i++) {
+        importedData[i].push('11')
+      }
       this.importEcheancier = importedData.map(arr => {
         const obj = {};
         for (let i = 0; i < header.length; i++) {
@@ -166,36 +172,40 @@ export class EcheancierComponent implements OnInit {
     }
   }
   saveExcel(){
-
-    console.log((this.grid.dataSource))
     let taille = Object.keys(this.grid.dataSource);
     var char :number= taille.length;
+    for (let i = 0; i < char ; i++) {
+      if(this.grid.dataSource[i].partie === undefined){
+        this.grid.dataSource[i].partie = '11';
+      }
+    }
+    console.log((this.grid.dataSource))
     const erreurs = [];
-    // this.subs = timer(0,300).subscribe(n=>{
-    //   console.log(n,char);
-    //     this.chargement.requestStarted();
-    //     this.chargement.requestStarted2(n,char);
-    //   this.service.saveEcheanciers(this.grid.dataSource[n]).subscribe(
-    //       ()=> {
-    //       }
-    //       ,error =>{
-    //       console.log((error));
-    //       erreurs.push(n);
-    //       n=n-1
-    //     }
-    //   );
-    //   if(n===char-1){
-    //     this.ngOnDestroy();
-    //     console.log("fin : " +n)
-    //     this.chargement.resetSpinner();
-    //     this.chargement.requestEnded();
-    //     setTimeout(function(){
-    //
-    //       }, 200);
-    //     this.route.navigateByUrl('/EcheancierMvm');
-    //     this.ngOnDestroy();
-    //
-    //   }
-    // })
+    this.subs = timer(0,300).subscribe(n=>{
+      console.log(n,char);
+        this.chargement.requestStarted();
+        this.chargement.requestStarted2(n,char);
+      this.service.saveEcheanciers(this.grid.dataSource[n]).subscribe(
+          ()=> {
+          }
+          ,error =>{
+          console.log((error));
+          erreurs.push(n);
+          n=n-1
+        }
+      );
+      if(n===char-1){
+        this.ngOnDestroy();
+        console.log("fin : " +n)
+        this.chargement.resetSpinner();
+        this.chargement.requestEnded();
+        setTimeout(function(){
+
+          }, 200);
+        this.route.navigateByUrl('/EcheancierMvm');
+        this.ngOnDestroy();
+
+      }
+    })
     }
 }

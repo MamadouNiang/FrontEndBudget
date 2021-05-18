@@ -29,9 +29,10 @@
       <div>
         <div class="control-section" >
           <ejs-grid  #grid
+                     [toolbar]='toolbar'
                      [dataSource]='tabMvm'
                      (dataBound)='dataBound($event)'
-
+                     [columns]="columnsR"
                      id="gridcomp"  allowSorting='true' showColumnMenu='true'
                      allowPaging='true' height=450 [pageSettings]='initialPage'>
 
