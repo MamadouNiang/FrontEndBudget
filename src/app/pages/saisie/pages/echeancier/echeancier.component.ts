@@ -24,6 +24,8 @@ import { Query } from '@syncfusion/ej2-data'
 export class EcheancierComponent implements OnInit {
   DataEcheancier$: Observable<any>| null = null;
   cas=[];
+
+  TableEcheancer=[];
   tabMvm={};
   AlltabMvm=[];
   typeEcheancierV=[];
@@ -42,11 +44,13 @@ export class EcheancierComponent implements OnInit {
     {field:'brut'},
     {field:'its'},
     {field:'cnss'},
+    {field:'cnam'},
     {field:'net'},
     {field:'pension'},
     {field:'partCnss'},
     {field:'partCnam'},
     {field:'partPension'},
+    {field:'observation'},
     {field: 'partie' , edit: {
         create: () => {
           this.partieElem = document.createElement('input');
@@ -67,7 +71,7 @@ export class EcheancierComponent implements OnInit {
           });
           this.partieObj.appendTo(this.partieElem);
         }}},
-    {field:'observation'},
+
 
   ];
   importEcheancier: EcheancierModel[] = [];
@@ -102,7 +106,7 @@ getAllTypeEcheancier(){
   },error => console.log(error));
 }
   customiseCell(args:RowDataBoundEventArgs){
-    this.toolbar = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
+    this.toolbar = ['Add', 'Edit', 'Delete', 'Update', 'Cancel','Search'];
     let net = args.data['net'];
     const brut =  args.data['brut'];
     const its =  args.data['its'];
@@ -174,91 +178,121 @@ getAllTypeEcheancier(){
     }
   }
  subs:any;
+  subs2:any;
   ngOnDestroy(){
     console.log(this.subs)
     if(this.subs != undefined){
       this.subs.unsubscribe();
     }
   }
+  ngOnDestroy2(){
+    console.log(this.subs2)
+    if(this.subs2 != undefined){
+      this.subs2.unsubscribe();
+    }
+  }
+  saveDataEcheancier(){
+    const erreurs = [];
+    let tailleEcheancier =this.TableEcheancer.length;
+
+    this.subs2 = timer(0,200).subscribe(n=>{
+      this.chargement.requestStarted();
+      this.chargement.requestStarted2(n,tailleEcheancier);
+      this.service.saveEcheanciers(this.TableEcheancer[n]).subscribe(
+          ()=> {
+          }
+          ,error =>{
+          console.log((error));
+          erreurs.push(n);
+          n=n-1
+        }
+      );
+     if(n===tailleEcheancier-1){
+       this.ngOnDestroy2();
+       console.log("fin : " +n)
+       this.chargement.resetSpinner();
+       this.chargement.requestEnded();
+       setTimeout(function(){
+       }, 200);
+       this.route.navigateByUrl('/EcheancierMvm');
+       this.ngOnDestroy2();
+     }
+   });
+  }
   saveExcel(){
     let taille = Object.keys(this.grid.dataSource);
     var char :number= taille.length;
-    for (let i = 0; i < char ; i++) {
-      const partie = this.grid.dataSource[i].partie;
-      this.service.getOneTypeEcheancier(partie).subscribe(data=>{
-        this.typeOneEcheancier = data ;
-        console.log(this.grid.dataSource[i])
-        if (this.grid.dataSource[i].cnam === 0) {
-          delete this.typeOneEcheancier.cnam;
-        }
-        if (this.grid.dataSource[i].cnss === 0) {
-          delete this.typeOneEcheancier.cnss;
-        }
-        if (this.grid.dataSource[i].its === 0) {
-          delete this.typeOneEcheancier.its;
-        }
-        if (this.grid.dataSource[i].partCnss === 0) {
-          delete this.typeOneEcheancier.partcnss;
-        }
-        if (this.grid.dataSource[i].partCnam === 0) {
-          delete this.typeOneEcheancier.partcnam;
-        }
-        if (this.grid.dataSource[i].pension === 0) {
-          delete this.typeOneEcheancier.pension;
-        }
-        if (this.grid.dataSource[i].partPension === 0) {
-          delete this.typeOneEcheancier.partpension;
-        }
-        console.log(this.typeOneEcheancier)
+    this.subs = timer(0,200).subscribe(n=>{
+      const erreurs = [];
+      this.chargement.requestStarted();
+      this.chargement.requestStarted2(n,char);
+      const partie = this.grid.dataSource[n].partie;
+          this.service.getOneTypeEcheancier(partie).subscribe(data=>{
+            this.typeOneEcheancier = data ;
+            delete this.typeOneEcheancier.partie;
+            if (this.grid.dataSource[n].cnam === 0) {
+              delete this.typeOneEcheancier.cnam;
+            }
+            if (this.grid.dataSource[n].cnss === 0) {
+              delete this.typeOneEcheancier.cnss;
+            }
+            if (this.grid.dataSource[n].its === 0) {
+              delete this.typeOneEcheancier.its;
+            }
+            if (this.grid.dataSource[n].partCnss === 0) {
+              delete this.typeOneEcheancier.partCnss;
+            }
+            if (this.grid.dataSource[n].partCnam === 0) {
+              delete this.typeOneEcheancier.partCnam;
+            }
+            if (this.grid.dataSource[n].pension === 0) {
+              delete this.typeOneEcheancier.pension;
+            }
+            if (this.grid.dataSource[n].partPension === 0) {
+              delete this.typeOneEcheancier.partPension;
+            }
+            let tailleT = Object.keys(this.typeOneEcheancier);
+            var charT :number= tailleT.length;
+            for (let i = 0; i < charT; i++) {
+              const filtreExcel  = [this.grid.dataSource[n]].map((e) => {
+                return {
+                  nni:e.nni,
+                  matricule: e.matricule,
+                  prenom: e.prenom,
+                  numeroCompte: e.nrCompte,
+                  brut:e.brut,
+                  net:e.net,
+                  cnss:e.cnss,
+                  cnam:e.cnam,
+                  pension:e.pension,
+                  its:e.its,
+                  partPension:e.partPension,
+                  partCnam:e.partCnam,
+                  partCnss:e.partCnss,
+                  codePost:this.typeOneEcheancier[Object.keys(this.typeOneEcheancier)[i]],
+                  dateMvm:Date.now(),
+                  montant:0,
+                  partie:e.partie,
+                };
+              });
+              filtreExcel[0].montant = filtreExcel[0][Object.keys(this.typeOneEcheancier)[i]]
+              this.TableEcheancer.push(filtreExcel[0])
 
-        this.tabMvm = data.map((e) => {
-          return {
-            id:e.id,
-            nni:e.nni,
-            matricule: e.matricule,
-            prenom: e.prenom,
-            numeroCompte: e.nrCompte,
-            brut:e.brut,
-            net:e.net,
-            partie:e.partie,
-            dateMvm:e.dateMvm,
-          };
-        });
-      },error => console.log(error));
-    }
-
-    for (let i = 0; i < char ; i++) {
-      if(this.grid.dataSource[i].partie === undefined){
-        this.grid.dataSource[i].partie = '11';
-      }
-    }
-    console.log((this.grid.dataSource))
-    const erreurs = [];
-    // this.subs = timer(0,300).subscribe(n=>{
-    //   console.log(n,char);
-    //     this.chargement.requestStarted();
-    //     this.chargement.requestStarted2(n,char);
-    //   this.service.saveEcheanciers(this.grid.dataSource[n]).subscribe(
-    //       ()=> {
-    //       }
-    //       ,error =>{
-    //       console.log((error));
-    //       erreurs.push(n);
-    //       n=n-1
-    //     }
-    //   );
-    //   if(n===char-1){
-    //     this.ngOnDestroy();
-    //     console.log("fin : " +n)
-    //     this.chargement.resetSpinner();
-    //     this.chargement.requestEnded();
-    //     setTimeout(function(){
-    //
-    //       }, 200);
-    //     this.route.navigateByUrl('/EcheancierMvm');
-    //     this.ngOnDestroy();
-    //
-    //   }
-    // })
-    }
+            }
+            console.log(n)
+            if(n==char-1) {
+              this.ngOnDestroy();
+              console.log("fin : " +n)
+               this.chargement.resetSpinner();
+              // this.saveDataEcheancier();
+               this.chargement.requestEnded();
+              this.saveDataEcheancier();
+              // setTimeout(function(){
+              //   }, 200);
+              // this.route.navigateByUrl('/EcheancierMvm');
+              this.ngOnDestroy();
+            }
+    });
+    });
+  }
 }

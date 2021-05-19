@@ -26,7 +26,7 @@ export class ChargemetService {
   }
   requestStarted2(valeur:any,taille:any){
     this.pourcentage = (valeur*100)/taille;
-    console.log(this.pourcentage);
+    // console.log(this.pourcentage);
     this.spinner2$.next( this.pourcentage);
   }
 

@@ -32,10 +32,9 @@ export class MvmEcheancierComponent implements OnInit {
     {field:'id', headerText:"ID"},
     {field:'matricule', headerText:"Matricule"},
     {field:'nni', headerText:"NNI"},
-    {field:'prenom', headerText:"Prenom"},
-    {field:'brut', headerText:"Brut"},
-    {field:'net', headerText:"Net"},
-    {field: 'partie' , headerText:"Code Poste"},
+    {field:'prenom', headerText:"Nom & Prenom "},
+    {field:'montant', headerText:"Montant"},
+    {field:'codePost', headerText:"Code Poste"},
     {field: 'dateMvm',format: {type:'date', format:'dd/MM/yyyy'}, headerText:"Date MAJ"},
   ];
 
@@ -112,8 +111,9 @@ export class MvmEcheancierComponent implements OnInit {
         prenom: e.prenom,
         numeroCompte: e.nrCompte,
         brut:e.brut,
-        net:e.net,
+        montant:e.montant,
         partie:e.partie,
+        codePost:e.codePost,
         dateMvm:e.dateMvm,
       };
     });
