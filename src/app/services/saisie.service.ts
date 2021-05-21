@@ -23,7 +23,7 @@ export class SaisieService {
   }
   // => les codes Mdr par bqnaue
   getAllMdr(cdBanque:any): Observable<any>{
-   return  this.http.get('http://10.1.117.45:8084/t_ref_cd_banques/'+cdBanque+'/cdMdr').pipe();
+   return  this.http.get('http://localhost:8084/t_ref_cd_banques/'+cdBanque+'/cdMdr').pipe();
   }
   getOneMdr(cdMdr: string): Observable<any> {
     return this.http.get(SERVER_URL_BE+ 'TDMdr/one/' + cdMdr).pipe();
@@ -31,7 +31,7 @@ export class SaisieService {
 
   // => code banque
   getAllBanque(): Observable<any>{
-    return  this.http.get('http://10.1.117.45:8084/t_ref_cd_banques').pipe();
+    return  this.http.get('http://localhost:8084/t_ref_cd_banques').pipe();
   }
   getOneBanque(cdMdr: string): Observable<any> {
     return this.http.get(SERVER_URL_BE+ 'TDMdr/one/' + cdMdr).pipe();
@@ -70,7 +70,7 @@ export class SaisieService {
 
 
   //EcheancierCRUD
-  getAllEcheancier(): Observable<any> {
+  getAllMvmEcheancier(): Observable<any> {
     return this.http.get(SERVER_URL_BE+ 'Echeancier/allEcheancier');
   }
 
@@ -84,5 +84,9 @@ export class SaisieService {
   }
   getOneTypeEcheancier(type: string): Observable<any> {
     return this.http.get(SERVER_URL_BE+ 'TypeEcheancier/unePartie/' + type).pipe();
+  }
+
+  getAllByMatriculeEcheancier(matricule): Observable<any> {
+    return this.http.get(SERVER_URL_BE+ 'donneeEcheancier/allByQuery/'+matricule).pipe();
   }
 }

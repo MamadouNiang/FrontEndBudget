@@ -31,6 +31,7 @@
           <ejs-grid  #grid
                      [toolbar]='toolbar'
                      [dataSource]='tabMvm'
+                     [allowGrouping]="true"
                      (dataBound)='dataBound($event)'
                      [columns]="columnsR"
                      id="gridcomp"  allowSorting='true' showColumnMenu='true'

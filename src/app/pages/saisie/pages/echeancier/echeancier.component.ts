@@ -149,7 +149,7 @@ getAllTypeEcheancier(){
       const data = <any[]>this.excelSrv.importFromFile(bstr);
 
       const header: string[] = Object.getOwnPropertyNames(new EcheancierModel());
-      const importedData = data.slice(1, -1);
+      const importedData = data.slice(1);
       this.initialPage = { pageSizes: true, pageCount: 4 ,pageSize:importedData.length};
       // this.columns.push(header+',Partie'+',Pension'+',Part Pension');
       for (let i = 0; i < importedData.length; i++) {
@@ -251,10 +251,12 @@ getAllTypeEcheancier(){
             if (this.grid.dataSource[n].partPension === 0) {
               delete this.typeOneEcheancier.partPension;
             }
+
             let tailleT = Object.keys(this.typeOneEcheancier);
             var charT :number= tailleT.length;
             for (let i = 0; i < charT; i++) {
               const filtreExcel  = [this.grid.dataSource[n]].map((e) => {
+                console.log(e);
                 return {
                   nni:e.nni,
                   matricule: e.matricule,
@@ -275,18 +277,20 @@ getAllTypeEcheancier(){
                   partie:e.partie,
                 };
               });
+              // console.log( filtreExcel[0]);
               filtreExcel[0].montant = filtreExcel[0][Object.keys(this.typeOneEcheancier)[i]]
               this.TableEcheancer.push(filtreExcel[0])
 
             }
             console.log(n)
-            if(n==char-1) {
+            console.log(char)
+            if(n === char-1) {
               this.ngOnDestroy();
               console.log("fin : " +n)
                this.chargement.resetSpinner();
-              // this.saveDataEcheancier();
+               this.saveDataEcheancier();
                this.chargement.requestEnded();
-              this.saveDataEcheancier();
+               // this.saveDataEcheancier();
               // setTimeout(function(){
               //   }, 200);
               // this.route.navigateByUrl('/EcheancierMvm');
