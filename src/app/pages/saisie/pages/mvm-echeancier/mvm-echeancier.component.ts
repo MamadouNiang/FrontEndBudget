@@ -23,6 +23,7 @@ import {DropDownList} from "@syncfusion/ej2-dropdowns";
 export class MvmEcheancierComponent implements OnInit {
   @ViewChild('grid') public grid: GridComponent;
   tabMvm={};
+  tempTabMvm=[];
   tempTab=[];
   AlltabMvm=[];
   typeEcheancier=[];
@@ -37,6 +38,7 @@ export class MvmEcheancierComponent implements OnInit {
     {field:'montant', headerText:"Montant"},
     {field:'codePost', headerText:"Code Poste"},
     {field:'aMontant', headerText:"Ancien Montant"},
+    {field:'codePoste', headerText:"Ancien Poste"},
     {field: 'dateMvm',format: {type:'date', format:'dd/MM/yyyy'}, headerText:"Date MAJ"},
   ];
 
@@ -62,8 +64,11 @@ export class MvmEcheancierComponent implements OnInit {
       allowDeleting: true
     };
     this.initialPage = {pageSizes: true, pageCount: 4};
-    console.log(this.tempTab)
 
+
+    // for (let i = 0; i < this.tempTabMvm.length; i++) {
+    //   console.log(this.tempTabMvm);
+    // }
   }
   dataBound(args: any) {
     this.grid.autoFitColumns();
@@ -82,25 +87,17 @@ export class MvmEcheancierComponent implements OnInit {
     }
   }
   getAllByMatriculeEcheancier(matricule){
+    var char :number= this.tempTab.length;
+    if(matricule!==null){
+     this.service.getAllByMatriculeEcheancier(matricule).subscribe((data)=>{
+       for (const datum of data) {
+         this.tempTabMvm.push(datum);
+       }
+     },error => {console.log(error),()=>{
+       this.AlltabMvm.push( this.tempTabMvm);
+     }})
+    }
 
-    let taille = Object.keys(this.tabMvm);
-    var char :number= taille.length;
-    console.log(char)
-    this.subs = timer(0,200).subscribe(n=>{
-      console.log(n)
-      if(n===char-1){
-        this.ngOnDestroy();
-        console.log("fin : " +n)
-        this.ngOnDestroy();
-      }
-
-    });
-    // this.service.getAllByMatriculeEcheancier(matricule).subscribe((data)=>{
-    //   // this.tempTab.push(data[0]);
-    //   console.log(data);
-    // },error => {
-    //   console.log(error)
-    // });
   }
   getAllMvmEcheancier(){
   this.service.getAllMvmEcheancier().subscribe((data)=>{
@@ -116,47 +113,37 @@ export class MvmEcheancierComponent implements OnInit {
         montant:e.montant,
         partie:e.partie,
         codePost:e.codePost,
+        codePoste:'',
         dateMvm:e.dateMvm,
       };
     });
     let taille = Object.keys(data);
     var char :number= taille.length;
-    console.log(char);
-    // for (const datum of data) {
-    //   this.tempTab.push(this.removeDup(char,data))
-    // }
-    // for (let i = 0; i < char ; i++) {
-    //   this.tempTab.push(data[i])
-    //   //this.tempTab.push(this.removeDup(char,data))
-    // }
     var obj = {};
-
     for ( var i=0, len=char; i < len; i++ )
       obj[data[i]['nni']] =data[i];
-
     data = new Array();
     for ( var key in obj )
     {
       data.push(obj[key]);
       this.tempTab.push(obj[key])
     }
+    for (const obj  of this.tempTab) {
+      console.log(this.getAllByMatriculeEcheancier(obj.matricule))
+    }
+    console.log(this.tabMvm);
+    console.log(this.tempTabMvm);
 
-  },error => console.log(error));
+  },error => console.log(error),()=>{
+    console.log(this.tempTabMvm.length);
+  });
   }
+
   removeItemOnce(arr, value) {
     var index = arr.indexOf(value);
     if (index > -1) {
       arr.splice(index, 1);
     }
     return arr;
-  }
-  removeDup(tailleTab,Tab=[]){
-    var obj = {};
-    for ( var i=0, len=tailleTab; i < len; i++ ){}
-      obj[Tab[i]['nni']] = Tab[i];
-    Tab = new Array();
-    for ( var key in obj )
-    {Tab.push(obj[key]);}
-    return Tab;
   }
 }
