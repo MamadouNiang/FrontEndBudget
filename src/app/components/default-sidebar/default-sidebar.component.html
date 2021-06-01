@@ -13,7 +13,7 @@
         <div id="head">
           <div class="text">Menu</div>
           <span id="hamburger" class="e-icons menu" (click)="openClick()"></span>
-          <div class="header"><img src="assets/logo.png " style="width: 2%"><strong>Direction Générale du Budget</strong></div>
+          <div class="header"><img src="assets/logo.png " style="width: 4%"><strong>Direction Générale du Budget</strong></div>
         </div>
         <!-- sidebar element declaration-->
         <ejs-sidebar id="sidebar-menu"
@@ -22,6 +22,7 @@
                      [width]='width'
                      [closeOnDocumentClick]="closeOnDocumentClick">
           <!-- normal state element declaration -->
+          <div id="close2" ><img src="assets/logo.png " style="width: 20%"></div>
           <div id="close" class="e-icons" (click)="closeClick()"></div>
           <div class="content-area">
             <!--ListView element declaration-->

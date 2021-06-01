@@ -37,6 +37,7 @@ import { GridModule, GroupService, SortService, PageService, ToolbarService, Edi
 import { DropDownTreeModule } from '@syncfusion/ej2-angular-dropdowns';
 import { ChargementComponent } from './components/chargement/chargement.component';
 import { MvmEcheancierComponent } from './pages/saisie/pages/mvm-echeancier/mvm-echeancier.component';
+import { ElementDeSalaireComponent } from './pages/saisie/pages/element-de-salaire/element-de-salaire.component';
 @NgModule({
   declarations: [
 
@@ -57,6 +58,7 @@ import { MvmEcheancierComponent } from './pages/saisie/pages/mvm-echeancier/mvm-
     DefaultSidebarComponent,
     ChargementComponent,
     MvmEcheancierComponent,
+    ElementDeSalaireComponent,
 
 
   ],

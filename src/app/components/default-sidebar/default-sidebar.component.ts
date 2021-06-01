@@ -22,17 +22,18 @@ export class DefaultSidebarComponent implements OnInit {
   public closeOnDocumentClick:boolean = true;
   public showBackdrop:boolean = true;
   public dataList: { [key: string]: Object }[] = [
-    { text: 'Changement de Compte' },
-    { text: 'Changement de Position' },
-    { text: 'Listes des Instances' },
-    { text: 'Listes des Validations' },
-    { text: 'Listes des Rejets' },
-    { text: 'Historiques' },
-    { text: 'Echeancier' },
-    { text: 'EcheancierMvm' },
+    { text: 'De Compte',  'category': 'Changements' },
+    { text: 'De Position',  'category': 'Changements' },
+    { text: "D'Element de Salaire",  'category': 'Changements' },
+    { text: 'Des Instances',  'category': 'Listes' },
+    { text: 'Des Validations' ,  'category': 'Listes'},
+    { text: 'Des Rejets' ,  'category': 'Listes'},
+    { text: 'Des Historiques',  'category': 'Listes' },
+    { text: 'Importation',  'category': 'Echeanciers' },
+    { text: 'Instances',  'category': 'Echeanciers' },
   ];
-  public fields: Object = { tooltip: 'text' };
-
+  // public fields: Object = { tooltip: 'text' };
+  public fields: Object = { groupBy: 'category', tooltip: 'text' };
   // open new tab
   newTabClick(): void {
     let URL = location.href.replace(location.search,'');

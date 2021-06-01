@@ -15,5 +15,6 @@ export class EcheancierModel {
   partPension = '';
   observation = '';
   partie = '';
-  codePost = '';
+  // codePost = '';
+  codeService = '';
 }

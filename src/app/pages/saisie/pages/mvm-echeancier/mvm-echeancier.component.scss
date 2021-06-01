@@ -12,3 +12,53 @@
   color: #fff;
   opacity: 1;
 }
+#global
+{
+  border: solid black 1px;
+}
+
+#cadre1
+{
+  width: 50%;
+  float: left;
+  border: solid black 1px;
+}
+
+#cadre2
+{
+  width: 50%;
+  margin-left: 50%;
+  border: solid black 1px;
+}
+
+.centre
+{
+  height: 100px;
+  width: 100px;
+  margin-left: 100px;
+}
+.e-grid .e-groupdroparea.e-grouped {
+  background-color: #006233;
+}
+.e-grid .e-groupheadercell {
+  background-color: #22774e;
+  border-color: #e0e0e0;
+  border-radius: 12px;
+  color: #fff;
+}
+.e-grid .e-groupdroparea {
+  background-color: #22774e;
+  border-top-color: #e0e0e0;
+  color: #fff;
+}
+.e-pager .e-currentitem {
+  background: #22774e;
+  color: #fff;
+  opacity: 1;
+}
+.e-pager .e-currentitem:hover {
+  background: #006233;
+  color: #fff;
+  opacity: 1;
+}
+

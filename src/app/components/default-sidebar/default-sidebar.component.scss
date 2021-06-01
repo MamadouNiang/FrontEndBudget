@@ -41,7 +41,7 @@
   border: none;
   background: #006233;
   width: 100%;
-  height: 50px;
+  height: 60px;
   color: #fff;
   padding: 0 15px;
   position: relative;
@@ -76,7 +76,7 @@ body {
   text-align: center;
   height: 50px;
   line-height: 50px;
-  font-size: 18px;
+  font-size: 20px;
   width: 100%
 }
 /* end of header area styles */
@@ -94,11 +94,22 @@ body {
 #wrapper #close:before {
   content: "\e109";
 }
+#wrapper #close2:before {
+  content: "";
 
+
+}
 #wrapper #close {
   float: right;
   color: #ffffff;
   cursor: pointer;
+  font-size: 18px;
+  line-height: 0px;
+  margin-top: -8%;
+}
+#wrapper #close2 {
+  float: left;
+  color: #ffffff;
   font-size: 15px;
   line-height: 14px;
 }
@@ -108,9 +119,9 @@ body {
 #menulist.e-listview .e-list-item:last-child {
   height: 53px;
   line-height: 51px;
-  text-align: center;
-  background: #94bda9;
-  color: rgba(255, 255, 255, 0.87);
+  //text-align: center;
+  background: #006233;
+  color: rgb(255, 255, 255);
   border-bottom: none;
   font-width: bold;
 }
@@ -178,8 +189,14 @@ body {
   border-right: 1px solid rgba(0, 0, 0, 0.12);
   left: 0;
   right: auto;
-  top: 50px;
+  top: 56px;
 }
 #sidebar-menu{
-  background: #0062336b;
+  background: #006233;
+}
+.e-listview .e-list-group-item {
+  background-color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.12);
+  color: rgb(0 0 0);
+  font-size: 16px;
 }

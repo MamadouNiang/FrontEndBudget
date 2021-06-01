@@ -4,6 +4,33 @@
     <main role="main" class="col-md-12 " >
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h3 class="h3">Liste Echeancier</h3>
+
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="tools">
+              <div class="btn-group mr-2">
+                <ng-select
+                  placeholder="Selection Etablissement ou recherche"
+                  appendTo="body"
+                  appearance="outline"
+                  [searchable]="true"
+                  [clearable]="true"
+                  [(ngModel)]="selected"
+                  (change)="getAllMvmEcheancier(selected)"
+                >
+
+                  <ng-option value={{codeService.cd_service}}  *ngFor="let codeService of tabCodeServices  ">
+                    {{codeService. cd_service}} - {{codeService.descrService}}
+                  </ng-option>
+
+                </ng-select>
+                </div>
+              <button  type="button" (click)="deleteDansEcheancier(TabSaveEcheancier)" [disabled]="tailleSelect==0" class="btn btn-sm btn-success ml-2">
+                <i class="bi bi-check"></i> Valider ({{tailleSelect }})</button><span  style="margin-left: 1%"></span>
+
+            </div>
+          </div>
+        </div>
 <!--        <div >-->
 <!--          <strong>-->
 <!--            <div class="alert alert-danger" role="alert" *ngIf="cas.length!=0">-->
@@ -26,17 +53,23 @@
 <!--          </button>-->
 <!--        </div>-->
       </div>
+
       <div>
         <div class="control-section" >
           <ejs-grid  #grid
                      [toolbar]='toolbar'
                      [dataSource]='tabMvm'
                      [allowGrouping]="true"
+                     [allowSelection]="true"
+                     [selectionSettings]='selectionOptions'
+                     [groupSettings]="groupOptions"
+                     (rowSelected)='rowSelected($event)'
+                     (rowDeselected)="rowDeSelected($event)"
                      (dataBound)='dataBound($event)'
+                     (rowDataBound)='customiseCell($event)'
                      [columns]="columnsR"
                      id="gridcomp"  allowSorting='true' showColumnMenu='true'
                      allowPaging='true' height=450 [pageSettings]='initialPage'>
-
           </ejs-grid>
         </div>
       </div>

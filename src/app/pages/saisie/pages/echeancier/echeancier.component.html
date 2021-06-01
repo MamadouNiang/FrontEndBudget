@@ -11,19 +11,37 @@
             </div>
           </strong>
         </div>
-        <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="tools">
-            <button class="btn btn-sm btn-success">
 
-              <label style="margin-bottom: 0;">
-                <span class="mdi mdi-file-export "><strong>   <i class="bi bi-file-plus "> </i>  Import</strong> </span>
-                <input class="custom-file-input" type="file" hidden  (change)="onFileChange($event)" >
-              </label>
-            </button>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="tools">
+              <div class="btn-group mr-2">
+                <ng-select
+                  placeholder="Selection Etablissement ou recherche"
+                  appendTo="body"
+                  appearance="outline"
+                  [searchable]="true"
+                  [clearable]="true"
+                  [(ngModel)]="selected">
+
+                  <ng-option value={{codeService.cd_service}}  *ngFor="let codeService of tabCodeServices  ">
+                    {{codeService. cd_service}} - {{codeService.descrService}}
+                  </ng-option>
+
+                </ng-select>
+              </div>
+              <button class="btn btn-sm btn-success" *ngIf="selected!=null">
+                <label style="margin-bottom: 0;">
+                  <span class="mdi mdi-file-export "><strong>   <i class="bi bi-file-plus "> </i>  Import</strong> </span>
+                  <input class="custom-file-input" type="file" hidden  (change)="onFileChange($event)" >
+                </label>
+              </button>
+              <button *ngIf="cas.length==0 && importEcheancier.length!=0" class="btn btn-sm btn-success ml-2" (click)="saveExcel()">
+                <span><strong> <i class="bi bi-file-check-fill"> </i> Valider</strong> </span>
+              </button>
+
+            </div>
           </div>
-          <button *ngIf="cas.length==0 && importEcheancier.length!=0" class="btn btn-sm btn-success ml-2" (click)="saveExcel()">
-            <span><strong> <i class="bi bi-file-check-fill"> </i> Valider</strong> </span>
-          </button>
         </div>
       </div>
       <div class="control-section" *ngIf="importEcheancier.length!=0">

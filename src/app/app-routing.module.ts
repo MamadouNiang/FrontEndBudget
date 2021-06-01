@@ -13,6 +13,7 @@ import {EcheancierComponent} from './pages/saisie/pages/echeancier/echeancier.co
 import {MvmEcheancierComponent} from './pages/saisie/pages/mvm-echeancier/mvm-echeancier.component';
 import {DefaultSidebarComponent} from './components/default-sidebar/default-sidebar.component';
 import { ChargementComponent } from './components/chargement/chargement.component';
+import {ElementDeSalaireComponent} from "./pages/saisie/pages/element-de-salaire/element-de-salaire.component";
 
 
 const routes: Routes = [
@@ -21,20 +22,21 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   { path: 'register', component : RegisterComponent, },
   { path: 'modification_compte', component : ComptebancaireComponent, },
-  { path: 'Changement de Compte', component : ComptebancaireComponent, },
+  { path: 'De Compte', component : ComptebancaireComponent, },
   { path: 'modification_position', component : PositionsComponent, },
-  { path: 'Changement de Position', component : PositionsComponent, },
+  { path: 'De Position', component : PositionsComponent, },
+  { path: "D'Element de Salaire", component : ElementDeSalaireComponent, },
   { path: 'mouvements', component : MouvementsComponent, },
-  { path: 'Listes des Instances', component : MouvementsComponent, },
+  { path: 'Des Instances', component : MouvementsComponent, },
   { path: 'rejeter', component : RejetsComponent, },
-  { path: 'Listes des Rejets', component : RejetsComponent, },
+  { path: 'Des Rejets', component : RejetsComponent, },
   { path: 'valider', component : ValiderComponent, },
-  { path: 'Listes des Validations', component : ValiderComponent, },
+  { path: 'Des Validations', component : ValiderComponent, },
   { path: 'traces', component : TracesComponent, },
-  { path: 'Historiques', component : TracesComponent, },
+  { path: 'Des Historiques', component : TracesComponent, },
   { path: 'echeancier', component : EcheancierComponent, },
-  { path: 'Echeancier', component : EcheancierComponent, },
-  { path: 'EcheancierMvm', component : MvmEcheancierComponent, },
+  { path: 'Importation', component : EcheancierComponent, },
+  { path: 'Instances', component : MvmEcheancierComponent, },
   { path: "chargement", component: ChargementComponent, },
   { path: '', component: PositionsComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },

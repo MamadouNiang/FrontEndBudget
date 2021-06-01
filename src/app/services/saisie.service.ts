@@ -89,4 +89,35 @@ export class SaisieService {
   getAllByMatriculeEcheancier(matricule): Observable<any> {
     return this.http.get(SERVER_URL_BE+ 'donneeEcheancier/allByQuery/'+matricule).pipe();
   }
+  getAllrefService(): Observable<any> {
+    return this.http.get(SERVER_URL_BE+ 'refService/all').pipe();
+  }
+
+  getEtabBy(cdSErvice): Observable<any> {
+    return this.http.get(SERVER_URL_BE+ 'Echeancier/allEtab/'+cdSErvice).pipe();
+  }
+  getOneEtabBy(cdSErvice): Observable<any> {
+    return this.http.get(SERVER_URL_BE+ 'refService/un/'+cdSErvice).pipe();
+  }
+
+  getMvmByMatCdService(param): Observable<any> {
+    return this.http.get(SERVER_URL_BE+ 'Echeancier/allMvm/'+param).pipe();
+  }
+
+  getMvmByMat(matricule): Observable<any> {
+    return this.http.get(SERVER_URL_BE+ 'Echeancier/allMvmByMat/'+matricule).pipe();
+  }
+
+  deleteById(id:any): Observable<any> {
+    return this.http.delete(SERVER_URL_BE+ 'Echeancier/delete/'+id).pipe();
+  }
+
+  saveDonneeEch(data:any): Observable<any>{
+    const body=JSON.parse(JSON.stringify(data));
+    return  this.http.post(SERVER_URL_BE+'donneeEcheancier/save',body).pipe();
+  }
+
+  deleteBynumEcrit(numEcrit:any): Observable<any> {
+    return this.http.delete(SERVER_URL_BE+ 'donneeEcheancier/delete/'+numEcrit).pipe();
+  }
 }
