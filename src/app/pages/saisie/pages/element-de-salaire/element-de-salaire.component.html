@@ -1,0 +1,179 @@
+
+<div class="container-fluid">
+  <div class="row">
+    <!--    <app-main-saisie > </app-main-saisie>-->
+    <main role="main" class="col-md-12" >
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h3 class="h3">Chamgement Element de Salaire</h3>
+        <div *ngFor="let alert of alerts">
+          <strong>
+            <alert style="position: absolute; top: 10px; right: 35%;" [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+          </strong>
+        </div>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <form [formGroup]="rechercheForm" (ngSubmit)="onSearchMatricule()">
+            <div class="btn-group mr-2">
+              <input formControlName="matricule" type="text" class="form-control" placeholder="Entrer le matricule" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <button type="submit" [disabled]="rechercheForm.invalid"  class="btn btn-sm btn-success">
+              <i class="bi bi-search"></i> Rechercher</button>
+          </form>
+
+        </div>
+      </div>
+      <br>
+      <div class="container-fluid" >
+        <div class="panel panel-success" style="margin-top: -2%" *ngIf="showTable">
+          <div class="panel-heading" style="color: green"><h5><strong>Anciennes Informations</strong></h5></div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm">
+                <table class="table table-striped table-responsive-lg table-sm">
+                  <thead>
+                  <tr class="table-success">
+                    <th scope="col">Matricule</th>
+                    <th scope="col">Code Poste </th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Date Debut</th>
+                    <th scope="col">Date Fin</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let elemt of tabAddEcheancier">
+                    <td>{{elemt.matricule}}</td>
+                    <td>{{elemt.codePoste}}</td>
+                    <td>{{elemt.montantRetenuMois}}</td>
+                    <td>{{elemt.dateMvm | date:'dd/MM/yyyy'}}</td>
+                    <td>{{elemt.dateFin | date:'dd/MM/yyyy'}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </div>
+              <!--      <div class="col-sm">-->
+              <!--       col2-->
+              <!--      </div>-->
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="panel panel-warning" style="margin-top: -3%;"  *ngIf="showTable">
+          <div class="panel-heading" style="color: red"><h5><strong>Nouvelles Informations</strong> </h5> </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm">
+                <form [formGroup]="validerForm" (ngSubmit)="onvaliderFormaliderForm()">
+                  <table class="table table-striped table-responsive-lg table-sm ">
+                    <thead>
+                    <tr class="table-success">
+                      <th scope="col">Etablissement</th>
+                      <th scope="col"></th>
+                      <th scope="col">Partie</th>
+                      <th scope="col">Code Poste </th>
+                      <th scope="col">Montant</th>
+                      <th scope="col">Date Debut</th>
+                      <th scope="col">Date Fin</th>
+                      <th scope="col">Options</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr >
+                      <td>
+                        <ng-select
+                          formControlName="codeService"
+                          placeholder="Selection Etablissement ou recherche"
+                          appendTo="body"
+                          appearance="outline"
+                          [searchable]="true"
+                          [clearable]="true"
+                          [(ngModel)]="selectedEtab">
+
+                          <ng-option value={{codeService.cd_service}}  *ngFor="let codeService of tabCodeServices  ">
+                            {{codeService. cd_service}} - {{codeService.descrService}}
+                          </ng-option>
+                        </ng-select>
+
+                      </td>
+                      <td>
+                        <input hidden  readonly value={{matricule}} formControlName="matricule" type="text" class="form-control"  aria-label="Username" aria-describedby="basic-addon1">
+                      </td>
+                      <td >
+                        <select class="form-control "
+                                formControlName="partie"
+                                onfocus='this.size=5;' onblur='this.size=1;' onchange=' this.blur();'>
+                          <option disabled ></option>
+                          <option  *ngFor="let partie of listePartie  ; let j = index"
+                                   value={{partie}}
+                                   (click)="getElemPartie(partie)"
+                          >{{partie}}
+                          </option>
+                        </select>
+                      </td>
+                      <td>
+                        <ng-select formControlName="codePost" bindLabel="name"
+                                   placeholder="Selection ou recherche"
+                                   appendTo="body"
+                                   [searchable]="true"
+                                   [clearable]="true"
+                                   [(ngModel)]="selected">
+                          <ng-option value="173">Rappel - 173</ng-option>
+                          <ng-option
+                            value={{codePoste}}  *ngFor="let codePoste of TabValuePartie ;let j = index"
+                          >
+                           {{TabKeyPartie[j]}} - {{codePoste}}
+                          </ng-option>
+                        </ng-select>
+                      </td>
+                      <td>
+                        <input min=0 formControlName="montant" type="number" class="form-control"  aria-label="Username" aria-describedby="basic-addon1">
+                      </td>
+                      <td>
+                        <input id='dateMvm' readonly  formControlName="dateMvm" type="text" class="form-control"  aria-label="Username" aria-describedby="basic-addon1">
+                      </td>
+                      <td>
+                        <input   formControlName="dateFin" type="date" class="form-control"  aria-label="Username" aria-describedby="basic-addon1">
+                      </td>
+                      <td>
+                        <button  [disabled]="validerForm.invalid"  type="submit" class="btn btn-success btn-sm"> <i class="bi bi-check"></i> Valider</button>
+                      </td>
+
+                    </tr>
+                    </tbody>
+                  </table>
+                </form>
+                <table class="table table-striped table-responsive-lg table-sm" *ngIf="tabMvmEcheancier.length!=0">
+                  <thead>
+                  <tr class="table-success">
+                    <th scope="col">Matricule</th>
+                    <th scope="col">Code Poste </th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Date Debut</th>
+                    <th scope="col">Date Fin</th>
+                    <th scope="col">Options</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr  *ngFor="let elemt of tabMvmEcheancier">
+                    <td>{{elemt.matricule}}</td>
+                    <td>{{elemt.codePost}}</td>
+                    <td>{{elemt.montant}}</td>
+                    <td>{{elemt.dateMvm | date:'dd/MM/yyyy'}}</td>
+                    <td>{{elemt.dateFin}}</td>
+                    <td>
+                      <button (click)="deleteElemMvm(elemt.id)" type="button" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i> Supprimer</button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
