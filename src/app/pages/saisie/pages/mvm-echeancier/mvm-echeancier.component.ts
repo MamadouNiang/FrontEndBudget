@@ -126,6 +126,18 @@ export class MvmEcheancierComponent implements OnInit {
     }
 
   }
+  async getEleByMat(matricule:any) {
+    let response = await this.service.getAllByMatriculeEcheancier(matricule).toPromise();
+    if (response) {
+      for (const datum of response) {
+        // console.log(datum.numEcrit);
+          await this.service.deleteBynumEcrit(datum.numEcrit).subscribe(data=>{
+            console.log(data);
+          },error => console.log(error.error.text));
+      }
+    }
+  }
+
   deleteDansEcheancier(data:any){
     let finDupTabMvm =[]
     let char = data.length;
@@ -137,33 +149,32 @@ export class MvmEcheancierComponent implements OnInit {
     {
       finDupTabMvm.push(Object.assign({}, obj[key]))
     }
-    this.subdeleteEch = timer(0,500).subscribe(n=>{
+    this.subdeleteEch = timer(0,1000).subscribe(async n=>{
       this.chargement.requestStarted();
       this.chargement.requestStarted2(n,finDupTabMvm.length-1);
-        this.service.getAllByMatriculeEcheancier(finDupTabMvm[n].matricule).subscribe(data=>{
-          for (const datum of data) {
-            // console.log(datum.numEcrit);
-            this.service.deleteBynumEcrit(datum.numEcrit).subscribe(data=>{
-              console.log(data);
-            },error => console.log(error.error.text));
-          }
-        },error => console.log(error.error.text))
-
+      await this.getEleByMat(finDupTabMvm[n].matricule);
       if (n===finDupTabMvm.length-1){
         this.subdeleteEch.unsubscribe();
         this.chargement.resetSpinner();
         this.chargement.requestEnded();
         this.subdeleteEch.unsubscribe();
-        this.saveDansEcheancier(data);
       }
       console.log("fin : " +n)
+      this.saveDansEcheancier(data);
     });
+  }
+  async saveEleDansEcheancier(el:any){
+    console.log(el);
+    let response = await this.service.saveDonneeEch(el).toPromise();
+    console.log(response.message.text)
+    // if (response){
+    //   console.log('jai fini de supprimer je save')
+    //   console.log(response)
+    // }
   }
   saveDansEcheancier(data:any){
     let finTabMvm ={}
-    this.deleteFromMvm(data);
-    this.subsaveEch = timer(0,50).subscribe(n=>{
-      // console.log(n);
+    this.subsaveEch = timer(0,1000).subscribe( n=>{
       finTabMvm = data.map((e) => {
         return{
           matricule:e.matricule,
@@ -180,13 +191,9 @@ export class MvmEcheancierComponent implements OnInit {
           actif:"1"
         };
       });
-      // console.log(finTabMvm[n]);
-
-      this.service.saveDonneeEch(finTabMvm[n]).subscribe(data=>{
-
-      },error => console.log(error.error.text));
       this.chargement.requestStarted();
       this.chargement.requestStarted2(n,data.length-1);
+      this.saveEleDansEcheancier(finTabMvm[n]);
       if (n==data.length-1){
         this.subsaveEch.unsubscribe();
         console.log("fin : " +n)
@@ -194,6 +201,7 @@ export class MvmEcheancierComponent implements OnInit {
         this.chargement.requestEnded();
         this.subsaveEch.unsubscribe();
       }
+      this.deleteFromMvm(data);
     });
 
   }
@@ -204,11 +212,13 @@ export class MvmEcheancierComponent implements OnInit {
     }
 
   }
+  async deleteElFromMvm(id:any){
+    let res = await  this.service.deleteById(id).toPromise();
+    console.log(res.message.text);
+  }
   deleteFromMvm(data:any){
-    this.subdeleteMvm = timer(0,500).subscribe(n=>{
-      this.service.deleteById(data[n].id).subscribe(data=>{
-
-      },error => console.log(error.error.text));
+    this.subdeleteMvm = timer(0,1000).subscribe(n=>{
+      this.deleteElFromMvm(data[n].id);
       this.chargement.requestStarted();
       this.chargement.requestStarted2(n,data.length-1);
       this.grid.refreshColumns()
@@ -219,8 +229,8 @@ export class MvmEcheancierComponent implements OnInit {
         this.chargement.resetSpinner();
         this.chargement.requestEnded();
         this.subdeleteMvm.unsubscribe();
-        this.tailleSelect =0;
       }
+      this.tailleSelect =0;
     });
 
   }
