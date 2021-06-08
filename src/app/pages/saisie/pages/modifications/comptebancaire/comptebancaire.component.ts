@@ -149,10 +149,12 @@ export class ComptebancaireComponent implements OnInit {
   getAllCB() {
     const boo = [];
     this.service.getAllBanque().subscribe(data => {
+      console.log(data)
       boo.push(data);
 
       boo.map((e) => {
         for (let i = 0; i < e._embedded.t_ref_cd_banques.length; i++) {
+          console.log(e._embedded.t_ref_cd_banques[i])
           this.listeBanqueA.push(e._embedded.t_ref_cd_banques[i]);
           this.listeBanque.push(e._embedded.t_ref_cd_banques[i].cdBanque);
           this.listeBanqueReduit.push(e._embedded.t_ref_cd_banques[i].descrReduit)

@@ -14,6 +14,8 @@ import {MvmEcheancierComponent} from './pages/saisie/pages/mvm-echeancier/mvm-ec
 import {DefaultSidebarComponent} from './components/default-sidebar/default-sidebar.component';
 import { ChargementComponent } from './components/chargement/chargement.component';
 import {ElementDeSalaireComponent} from "./pages/saisie/pages/element-de-salaire/element-de-salaire.component";
+import {ElementsDeSalairesComponent} from "./pages/saisie/pages/elements-de-salaires/elements-de-salaires.component";
+import {MvmsEcheancierComponent} from "./pages/saisie/pages/mvms-echeancier/mvms-echeancier.component";
 
 
 const routes: Routes = [
@@ -25,7 +27,7 @@ const routes: Routes = [
   { path: 'De Compte', component : ComptebancaireComponent, },
   { path: 'modification_position', component : PositionsComponent, },
   { path: 'De Position', component : PositionsComponent, },
-  { path: "D'Element de Salaire", component : ElementDeSalaireComponent, },
+  { path: "D'elements de salaire", component : ElementsDeSalairesComponent, },
   { path: 'mouvements', component : MouvementsComponent, },
   { path: 'Des Instances', component : MouvementsComponent, },
   { path: 'rejeter', component : RejetsComponent, },
@@ -37,6 +39,7 @@ const routes: Routes = [
   { path: 'echeancier', component : EcheancierComponent, },
   { path: 'Importation', component : EcheancierComponent, },
   { path: 'Instances', component : MvmEcheancierComponent, },
+  // { path: 'Instances', component : MvmsEcheancierComponent, },
   { path: "chargement", component: ChargementComponent, },
   { path: '', component: PositionsComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },

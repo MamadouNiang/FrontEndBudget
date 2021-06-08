@@ -6,7 +6,7 @@ export const environment = {
   production: false
 };
 export const SERVER_URL_FE = 'http://localhost:4200';
-export const SERVER_URL_BE = 'http://localhost:8084/api/rest/';
+export const SERVER_URL_BE = 'http://localhost:8085/api/rest/';
 
 /*
  * For easier debugging in development mode, you can import the following file

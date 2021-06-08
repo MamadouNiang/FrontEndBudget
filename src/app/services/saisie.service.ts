@@ -23,7 +23,7 @@ export class SaisieService {
   }
   // => les codes Mdr par bqnaue
   getAllMdr(cdBanque:any): Observable<any>{
-   return  this.http.get('http://localhost:8084/t_ref_cd_banques/'+cdBanque+'/cdMdr').pipe();
+   return  this.http.get('http://localhost:8085/t_ref_cd_banques/'+cdBanque+'/cdMdr').pipe();
   }
   getOneMdr(cdMdr: string): Observable<any> {
     return this.http.get(SERVER_URL_BE+ 'TDMdr/one/' + cdMdr).pipe();
@@ -31,7 +31,7 @@ export class SaisieService {
 
   // => code banque
   getAllBanque(): Observable<any>{
-    return  this.http.get('http://localhost:8084/t_ref_cd_banques').pipe();
+    return  this.http.get('http://localhost:8085/t_ref_cd_banques?size=29').pipe();
   }
   getOneBanque(cdMdr: string): Observable<any> {
     return this.http.get(SERVER_URL_BE+ 'TDMdr/one/' + cdMdr).pipe();

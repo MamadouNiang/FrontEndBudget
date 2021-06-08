@@ -209,6 +209,7 @@ getAllMvmByMat(){
         partPension : e.partPension,
         partCnam:e.partCnam,
         partCnss:e.partCnss,
+        rappel:e.rappel,
       };}));
     this.TabKeyPartie   = (Object.keys(this.TabCodePoste[0][0]));
     this.TabValuePartie = (Object.values(this.TabCodePoste[0][0]));

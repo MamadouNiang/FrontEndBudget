@@ -24,7 +24,7 @@ export class DefaultSidebarComponent implements OnInit {
   public dataList: { [key: string]: Object }[] = [
     { text: 'De Compte',  'category': 'Changements' },
     { text: 'De Position',  'category': 'Changements' },
-    { text: "D'Element de Salaire",  'category': 'Changements' },
+    { text: "D'elements de salaire",  'category': 'Changements' },
     { text: 'Des Instances',  'category': 'Listes' },
     { text: 'Des Validations' ,  'category': 'Listes'},
     { text: 'Des Rejets' ,  'category': 'Listes'},

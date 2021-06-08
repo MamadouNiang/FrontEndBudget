@@ -166,7 +166,7 @@ export class MvmEcheancierComponent implements OnInit {
   async saveEleDansEcheancier(el:any){
     console.log(el);
     let response = await this.service.saveDonneeEch(el).toPromise();
-    console.log(response.message.text)
+    console.log(response)
     // if (response){
     //   console.log('jai fini de supprimer je save')
     //   console.log(response)
@@ -214,7 +214,7 @@ export class MvmEcheancierComponent implements OnInit {
   }
   async deleteElFromMvm(id:any){
     let res = await  this.service.deleteById(id).toPromise();
-    console.log(res.message.text);
+    // console.log(res);
   }
   deleteFromMvm(data:any){
     this.subdeleteMvm = timer(0,1000).subscribe(n=>{

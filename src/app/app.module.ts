@@ -38,6 +38,8 @@ import { DropDownTreeModule } from '@syncfusion/ej2-angular-dropdowns';
 import { ChargementComponent } from './components/chargement/chargement.component';
 import { MvmEcheancierComponent } from './pages/saisie/pages/mvm-echeancier/mvm-echeancier.component';
 import { ElementDeSalaireComponent } from './pages/saisie/pages/element-de-salaire/element-de-salaire.component';
+import { ElementsDeSalairesComponent } from './pages/saisie/pages/elements-de-salaires/elements-de-salaires.component';
+import { MvmsEcheancierComponent } from './pages/saisie/pages/mvms-echeancier/mvms-echeancier.component';
 @NgModule({
   declarations: [
 
@@ -59,6 +61,8 @@ import { ElementDeSalaireComponent } from './pages/saisie/pages/element-de-salai
     ChargementComponent,
     MvmEcheancierComponent,
     ElementDeSalaireComponent,
+    ElementsDeSalairesComponent,
+    MvmsEcheancierComponent,
 
 
   ],
