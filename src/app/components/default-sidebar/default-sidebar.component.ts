@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SelectEventArgs, SidebarComponent} from '@syncfusion/ej2-angular-navigations';
 import {Route, Router} from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-default-sidebar',
@@ -9,7 +10,7 @@ import {Route, Router} from '@angular/router';
 })
 export class DefaultSidebarComponent implements OnInit {
 
-  constructor( private router:Router) {
+  constructor( private router:Router, private authServ:AuthenticationService) {
 
   }
 
@@ -22,6 +23,7 @@ export class DefaultSidebarComponent implements OnInit {
   public closeOnDocumentClick:boolean = true;
   public showBackdrop:boolean = true;
   public dataList: { [key: string]: Object }[] = [
+    { text: 'Ajout Personnel',  'category': 'Recrutement' },
     { text: 'De Compte',  'category': 'Changements' },
     { text: 'De Position',  'category': 'Changements' },
     { text: "D'elements de salaire",  'category': 'Changements' },
@@ -52,5 +54,18 @@ export class DefaultSidebarComponent implements OnInit {
   }
   closeClick() {
     this.sidebarInstance.hide();
+  }
+  isAdmin(){
+    return this.authServ.isAdmin();
+  }
+  isUser(){
+    return this.authServ.isUser();
+  }
+  isAuthenticated(){
+    return this.authServ.isAuthenticated();
+  }
+
+  logOut(){
+    this.authServ.logout();
   }
 }

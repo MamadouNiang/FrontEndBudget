@@ -201,7 +201,9 @@ export class MvmEcheancierComponent implements OnInit {
         this.chargement.requestEnded();
         this.subsaveEch.unsubscribe();
       }
-      this.deleteFromMvm(data);
+      this.updateMvm(data);
+      // this.deleteFromMvm(data);
+      console.log(data)
     });
 
   }
@@ -233,6 +235,12 @@ export class MvmEcheancierComponent implements OnInit {
       this.tailleSelect =0;
     });
 
+  }
+  async updateMvm(data:any){
+    for (let i = 0; i < data.length; i++) {
+      // let res = await this.service.UpdateM(data[i]).toPromise();
+      console.log(data[i])
+    }
   }
   customiseCell(args:RowDataBoundEventArgs) {
     const id = ((args.row as HTMLTableRowElement));
@@ -343,7 +351,11 @@ export class MvmEcheancierComponent implements OnInit {
   getAllMvmEcheancier(cdService){
     let boo =[] ;
   this.service.getEtabBy(cdService).subscribe((data)=>{
-    this.tabMvm = (data) ;
+    for (const objElement of data) {
+      console.log(objElement.validation);
+    }
+    console.log(data);
+    this.tabMvm  = (data) ;
     this.tabMvm = data.map((e) => {
       return {
         id:e.id,
@@ -361,6 +373,7 @@ export class MvmEcheancierComponent implements OnInit {
         codeService:e.codeService,
         numEcrit:e.numEcrit,
         dateFin:e.dateFin,
+        validation:e.validation,
       };
     });
     let taille = Object.keys(data);

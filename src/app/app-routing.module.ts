@@ -16,6 +16,7 @@ import { ChargementComponent } from './components/chargement/chargement.componen
 import {ElementDeSalaireComponent} from "./pages/saisie/pages/element-de-salaire/element-de-salaire.component";
 import {ElementsDeSalairesComponent} from "./pages/saisie/pages/elements-de-salaires/elements-de-salaires.component";
 import {MvmsEcheancierComponent} from "./pages/saisie/pages/mvms-echeancier/mvms-echeancier.component";
+import {RecrutementComponent} from "./pages/saisie/pages/recrutement/recrutement.component";
 
 
 const routes: Routes = [
@@ -41,8 +42,9 @@ const routes: Routes = [
   { path: 'Instances', component : MvmEcheancierComponent, },
   // { path: 'Instances', component : MvmsEcheancierComponent, },
   { path: "chargement", component: ChargementComponent, },
-  { path: '', component: PositionsComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: "recrutement", component: RecrutementComponent, },
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+
 ];
 
 @NgModule({

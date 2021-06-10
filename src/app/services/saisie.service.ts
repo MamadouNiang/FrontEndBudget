@@ -120,4 +120,7 @@ export class SaisieService {
   deleteBynumEcrit(numEcrit:any): Observable<any> {
     return this.http.delete(SERVER_URL_BE+ 'donneeEcheancier/delete/'+numEcrit).pipe();
   }
+  UpdateM(data:any){
+    return  this.http.put(SERVER_URL_BE+'Echeancier/updateEch',data).pipe();
+  }
 }
